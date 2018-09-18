@@ -18,3 +18,12 @@ When you first install the plugin, it will be necessary to add your repository's
 ## Possible Complications
 
 If you use this plugin and you also use OctoPrint's interface to upload files, you must be careful about file naming and clashes which could occur as a result. If in doubt, delete the one you uploaded via the OctoPrint interface and then get the latest version from your repository.
+
+|Description|Version|Author|Last Update|
+|:---|:---|:---|:---|
+|OctoPrint-GitFiles|v0.1.0|OutsourcedGuru|September 18, 2018|
+
+|Donate||Cryptocurrency|
+|:-----:|---|:--------:|
+| ![eth-receive](https://user-images.githubusercontent.com/15971213/40564950-932d4d10-601f-11e8-90f0-459f8b32f01c.png) || ![btc-receive](https://user-images.githubusercontent.com/15971213/40564971-a2826002-601f-11e8-8d5e-eeb35ab53300.png) |
+|Ethereum||Bitcoin|
