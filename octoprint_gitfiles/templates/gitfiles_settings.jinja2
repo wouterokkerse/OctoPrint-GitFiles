@@ -1,0 +1,23 @@
+<div>
+    <h3>{{ _('GitFiles settings') }}</h3>
+    <div style="clear:both">
+        <small>{{ _("See the github README.md for how to setup your repository.") }}</small>
+    </div>
+    <form class="form-horizontal">
+        <div class="control-group">
+            <label class="control-label">{{ _('URL') }}</label>
+            <div class="controls">
+                <input type="text" class="input-block-level" data-bind="value: settings.plugins.gitfiles.url">
+            </div>
+        </div>
+    </form>
+    <h3>{{ _('General Workflow') }}</h3>
+    <div style="clear:both">
+        <ol>
+            <li>Into your workstation's local repository, slice the latest version of your files as gcode.</li>
+            <li>In this same folder on your workstation:
+                <ul><li><code>git add .</code></li><li><code>git commit -m "Commit-related information"</code></li><li><code>git push</code></li></ul></li>
+            <li>In OctoPrint, press the button to pull from the repository and refresh the Files side panel widget if necessary.</li>
+        </ol>
+    </div>
+</div>
