@@ -27,7 +27,7 @@ If you use this plugin and you also use OctoPrint's interface to upload files, y
 
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
-|OctoPrint-GitFiles|v1.0.1|OutsourcedGuru|September 20, 2018|
+|OctoPrint-GitFiles|v1.0.2|OutsourcedGuru|September 20, 2018|
 
 |Donate||Cryptocurrency|
 |:-----:|---|:--------:|
