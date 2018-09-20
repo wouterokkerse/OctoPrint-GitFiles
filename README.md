@@ -25,9 +25,36 @@ When you first install the plugin, it will be necessary to add your repository's
 
 If you use this plugin and you also use OctoPrint's interface to upload files, you must be careful not to upload files into the `github` subfolder. This would cause merge problems when you next pull from your repository.
 
+## Failure to Edit Settings -> URL
+If you don't adjust the Settings -> GitFiles -> URL from the default, you should see something like this in the `octoprint.log` file:
+
+```
+2018-09-20 11:52:39,136 - octoprint.plugins.gitfiles - INFO - Problem with setup. Please visit Settings -> GitFiles and adjust the URL
+```
+
+## Successfully Initialization
+If everything worked, you should see something like this in the `octoprint.log` file:
+
+```
+2018-09-20 11:55:06,253 - octoprint.plugins.gitfiles - INFO - `git pull`
+2018-09-20 11:55:06,258 - octoprint.plugins.gitfiles - INFO - /home/pi/.octoprint/gitfiles
+2018-09-20 11:55:06,262 - octoprint.plugins.gitfiles - INFO - Not initialized
+2018-09-20 11:55:06,263 - octoprint.plugins.gitfiles - INFO - Creating the gitfiles folder...
+2018-09-20 11:55:06,311 - octoprint.plugins.gitfiles - INFO - 0
+2018-09-20 11:55:06,314 - octoprint.plugins.gitfiles - INFO - Initializing the uploads folder...
+2018-09-20 11:55:06,489 - octoprint.plugins.gitfiles - INFO - 0
+2018-09-20 11:55:08,226 - octoprint.plugins.gitfiles - INFO - Setting up the remote origin for master...
+2018-09-20 11:55:08,291 - octoprint.plugins.gitfiles - INFO - 0
+2018-09-20 11:55:08,294 - octoprint.plugins.gitfiles - INFO - Creating the symlink...
+2018-09-20 11:55:08,346 - octoprint.plugins.gitfiles - INFO - 0
+2018-09-20 11:55:08,348 - octoprint.plugins.gitfiles - INFO - -- git pull origin master ---------------------------------------------------
+2018-09-20 11:55:11,104 - octoprint.plugins.gitfiles - INFO - git returned: 0
+2018-09-20 11:55:11,106 - octoprint.plugins.gitfiles - INFO - -- (end of git pull) --------------------------------------------------------
+```
+
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
-|OctoPrint-GitFiles|v1.0.2|OutsourcedGuru|September 20, 2018|
+|OctoPrint-GitFiles|v1.0.3|OutsourcedGuru|September 20, 2018|
 
 |Donate||Cryptocurrency|
 |:-----:|---|:--------:|
