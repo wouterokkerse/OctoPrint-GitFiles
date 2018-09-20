@@ -13,21 +13,21 @@ To prepare for this, you'll need a public github repository which stores a `mast
 
 ## Configuration
 
-When you first install the plugin, it will be necessary to add your repository's URL into the Settings interface. It's also a good idea to download & delete all of the existing files in your OctoPrint's Files area first so that you don't have do deal with merge-related issues.
+When you first install the plugin, it will be necessary to add your repository's URL into the Settings interface.
 
 ![github repository creation](https://user-images.githubusercontent.com/15971213/45719691-396fa600-bb56-11e8-9e71-d0d51c58ce4a.png)
 
-![settings](https://user-images.githubusercontent.com/15971213/45719635-ff9e9f80-bb55-11e8-93af-43cb79504676.png)
+![settings](https://user-images.githubusercontent.com/15971213/45835939-45777700-bcc0-11e8-80c6-2bc31e08f3ec.png)
 
-![button](https://user-images.githubusercontent.com/15971213/45719681-2e1c7a80-bb56-11e8-9568-e67c93215d19.png)
+![button](https://user-images.githubusercontent.com/15971213/45836320-5c6a9900-bcc1-11e8-92eb-3b0b20292e54.png)
 
 ## Possible Complications
 
-If you use this plugin and you also use OctoPrint's interface to upload files, you must be careful about file naming and clashes which could occur as a result. If in doubt, delete the one you uploaded via the OctoPrint interface and then get the latest version from your repository.
+If you use this plugin and you also use OctoPrint's interface to upload files, you must be careful not to upload files into the `github` subfolder. This would cause merge problems when you next pull from your repository.
 
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
-|OctoPrint-GitFiles|v0.1.0|OutsourcedGuru|September 18, 2018|
+|OctoPrint-GitFiles|v1.0.1|OutsourcedGuru|September 20, 2018|
 
 |Donate||Cryptocurrency|
 |:-----:|---|:--------:|

@@ -1,13 +1,18 @@
 # coding=utf-8
 from __future__ import absolute_import
+from subprocess import check_output
+from subprocess import call
+from octoprint.settings import settings, valid_boolean_trues
 import octoprint.plugin
+import os
 
 class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
                      octoprint.plugin.AssetPlugin,
+										 octoprint.plugin.SimpleApiPlugin,
                      octoprint.plugin.TemplatePlugin):
 
 	def get_settings_defaults(self):
-		return dict(url="https://github.com/YourGithubUsername/YourRepository.git")
+		return dict(url="https://github.com/YourGithubUsername/YourRepository.git",initialized=False)
 
 	def get_template_vars(self):
 		return dict(url=self._settings.get(["url"]))
@@ -21,6 +26,68 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 			css=["css/gitfiles.css"],
 			less=["less/gitfiles.less"]
 		)
+
+	def get_api_commands(self):
+		return dict(
+			git=["arg1"]
+		)
+
+	def on_api_command(self, command, data):
+		import flask
+		if command == "git":
+			if self._settings.get(["url"]) == "https://github.com/YourGithubUsername/YourRepository.git":
+				self._logger.info("Problem with setup. Please visit Settings -> GitFiles and adjust the URL")
+				return
+
+			self._logger.info("`git {arg1}`".format(**data))
+			r = settings()
+			#uploads = r.getBaseFolder("uploads")
+			uploads = r.getBaseFolder("uploads")
+			head, tail = os.path.split(uploads)
+			gitfilesFolder = head + "/gitfiles"
+			self._logger.info(gitfilesFolder)
+			if not self._settings.get(["initialized"]):
+				self._logger.info("Not initialized")
+				# These run if it's not been initialized before this
+				try:
+					self._logger.info("Creating the gitfiles folder...")
+					output =  call(["mkdir", gitfilesFolder], cwd=head)
+					self._logger.info(output)
+				except OSError as e:
+					self._logger.info("gitfiles folder creation failed")
+				try:
+					self._logger.info("Initializing the uploads folder...")
+					output =  call(["git", "init"], cwd=gitfilesFolder)
+					self._logger.info(output)
+					s = settings()
+					s.setBoolean(["plugins", "gitfiles", "initialized"], True)
+					s.save()
+				except OSError as e:
+					self._logger.info("git init failed")
+				try:
+					self._logger.info("Setting up the remote origin for master...")
+					output =  call(["git", "remote", "add", "origin", self._settings.get(["url"])], cwd=gitfilesFolder)
+					self._logger.info(output)
+				except OSError as e:
+					self._logger.info("git add remote origin failed")
+				try:
+					self._logger.info("Creating the symlink...")
+					output =  call(["ln", "-s", gitfilesFolder, uploads + "/github"], cwd=gitfilesFolder)
+					self._logger.info(output)
+					# For Windows 10, this might have to be something more like:
+					# call(["mklink", "/D", gitfilesFolder, uploads + "/github"], cwd=gitfilesFolder)
+				except OSError as e:
+					self._logger.info("Creation of symlink failed")
+			# This one runs regardless of whether or not it's been previously initialized
+			try:
+				lineStart = "-- git pull origin master ---------------------------------------------------"
+				lineEnd =   "-- (end of git pull) --------------------------------------------------------"
+				self._logger.info(lineStart)
+				output =  call(["git", "pull", "origin", "master"], cwd=gitfilesFolder)
+				self._logger.info("git returned: " + str(output))
+				self._logger.info(lineEnd)
+			except OSError as e:
+				self._logger.info("git pull failed")
 
 	def get_update_information(self):
 		return dict(

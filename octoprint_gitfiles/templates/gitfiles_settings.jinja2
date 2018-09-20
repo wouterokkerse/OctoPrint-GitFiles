@@ -1,23 +1,30 @@
 <div>
     <h3>{{ _('GitFiles settings') }}</h3>
     <div style="clear:both">
-        <small>{{ _("See the github README.md for how to setup your repository.") }}</small>
+        See the github <a href="https://github.com/OutsourcedGuru/OctoPrint-GitFiles" target="_blank">README.md</a> for how to setup your repository.
     </div>
     <form class="form-horizontal">
         <div class="control-group">
-            <label class="control-label">{{ _('URL') }}</label>
+            <label class="control-label">{{ _('URL:') }}</label>
             <div class="controls">
                 <input type="text" class="input-block-level" data-bind="value: settings.plugins.gitfiles.url">
             </div>
         </div>
     </form>
-    <h3>{{ _('General Workflow') }}</h3>
-    <div style="clear:both">
+    <table><tr><td valign="top"><h3>{{ _('General Workflow') }}</h3>
         <ol>
             <li>Into your workstation's local repository, slice the latest version of your files as gcode.</li>
             <li>In this same folder on your workstation:
                 <ul><li><code>git add .</code></li><li><code>git commit -m "Commit-related information"</code></li><li><code>git push</code></li></ul></li>
-            <li>In OctoPrint, press the button to pull from the repository and refresh the Files side panel widget if necessary.</li>
+            <li>In OctoPrint, press the Github button to pull from the repository and wait for the latest version to download.</li>
         </ol>
-    </div>
+        </td><td width="50%" valign="top">
+            <a href="https://github.com/OutsourcedGuru" target="_blank"><img src="plugin/gitfiles/static/img/profile.png"></a>
+        </td>
+    <tr><tr><td colspan="2"><hr/></td>
+    </tr><tr>
+        <td>Tip me (BTC)</td><td>Tip me (ETH)</td>
+    </tr><tr>
+        <td><img src="plugin/gitfiles/static/img/btc-receive.png"></td><td><img src="plugin/gitfiles/static/img/eth-receive.png"></td>
+    </tr></table>
 </div>
