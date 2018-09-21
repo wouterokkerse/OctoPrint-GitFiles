@@ -11,6 +11,8 @@ or manually using this URL:
 
 To prepare for this, you'll need a public github repository which stores a `master` branch of your latest sliced files. You'll need its URL to put this in the Settings area of the plugin.
 
+It's important not to use spaces in your GCODE filenames since OctoPrint will normally rename them in place (using underscores). This will likely cause problems which can easily be avoided if you not use spaces.
+
 ## Configuration
 
 When you first install the plugin, it will be necessary to add your repository's URL into the Settings interface.
@@ -24,6 +26,8 @@ When you first install the plugin, it will be necessary to add your repository's
 ## Possible Complications
 
 If you use this plugin and you also use OctoPrint's interface to upload files, you must be careful not to upload files into the `github` subfolder. This would cause merge problems when you next pull from your repository.
+
+Upon upload, OctoPrint will rename files, replacing spaces with underscores. If you've included space characters in your GCODE files they will be renamed-in-place which will then cause problems during the next pull. (Don't use spaces in your repository's filenames.)
 
 ## Failure to Edit Settings -> URL
 If you don't adjust the Settings -> GitFiles -> URL from the default, you should see something like this in the `octoprint.log` file:
@@ -54,7 +58,7 @@ If everything worked, you should see something like this in the `octoprint.log` 
 
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
-|OctoPrint-GitFiles|v1.0.3|OutsourcedGuru|September 20, 2018|
+|OctoPrint-GitFiles|v1.0.4|OutsourcedGuru|September 21, 2018|
 
 |Donate||Cryptocurrency|
 |:-----:|---|:--------:|

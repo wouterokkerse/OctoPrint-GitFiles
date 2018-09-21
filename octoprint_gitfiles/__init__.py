@@ -40,9 +40,7 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 				return
 
 			self._logger.info("`git {arg1}`".format(**data))
-			r = settings()
-			#uploads = r.getBaseFolder("uploads")
-			uploads = r.getBaseFolder("uploads")
+			uploads = self._settings.global_get_basefolder("uploads")
 			head, tail = os.path.split(uploads)
 			gitfilesFolder = head + "/gitfiles"
 			self._logger.info(gitfilesFolder)
@@ -51,17 +49,16 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 				# These run if it's not been initialized before this
 				try:
 					self._logger.info("Creating the gitfiles folder...")
-					output =  call(["mkdir", gitfilesFolder], cwd=head)
-					self._logger.info(output)
+					os.mkdir(gitfilesFolder, 0755)
+					self._logger.info("Created gitfiles folder")
 				except OSError as e:
 					self._logger.info("gitfiles folder creation failed")
 				try:
 					self._logger.info("Initializing the uploads folder...")
 					output =  call(["git", "init"], cwd=gitfilesFolder)
 					self._logger.info(output)
-					s = settings()
-					s.setBoolean(["plugins", "gitfiles", "initialized"], True)
-					s.save()
+					self._settings.setBoolean(["plugins", "gitfiles", "initialized"], True)
+					self._settings.save()
 				except OSError as e:
 					self._logger.info("git init failed")
 				try:
@@ -72,20 +69,16 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 					self._logger.info("git add remote origin failed")
 				try:
 					self._logger.info("Creating the symlink...")
-					output =  call(["ln", "-s", gitfilesFolder, uploads + "/github"], cwd=gitfilesFolder)
-					self._logger.info(output)
-					# For Windows 10, this might have to be something more like:
-					# call(["mklink", "/D", gitfilesFolder, uploads + "/github"], cwd=gitfilesFolder)
+					os.symlink(gitfilesFolder, uploads + "/github")
+					self._logger.info("Created symlink")
 				except OSError as e:
 					self._logger.info("Creation of symlink failed")
 			# This one runs regardless of whether or not it's been previously initialized
 			try:
-				lineStart = "-- git pull origin master ---------------------------------------------------"
-				lineEnd =   "-- (end of git pull) --------------------------------------------------------"
-				self._logger.info(lineStart)
+				self._logger.info("-- git pull origin master ---------------------------------------------------")
 				output =  call(["git", "pull", "origin", "master"], cwd=gitfilesFolder)
 				self._logger.info("git returned: " + str(output))
-				self._logger.info(lineEnd)
+				self._logger.info("-- (end of git pull) --------------------------------------------------------")
 			except OSError as e:
 				self._logger.info("git pull failed")
 
