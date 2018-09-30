@@ -5,7 +5,7 @@ title: OctoPrint-GitFiles
 description: Use a github repository for keeping your OctoPrint Files collection up-to-date.
 author: OutsourcedGuru
 license: MIT
-date: 2018-09-20
+date: 2018-09-29
 homepage: https://github.com/OutsourcedGuru/OctoPrint-GitFiles
 source: https://github.com/OutsourcedGuru/OctoPrint-GitFiles
 archive: https://github.com/OutsourcedGuru/OctoPrint-GitFiles/archive/master.zip
