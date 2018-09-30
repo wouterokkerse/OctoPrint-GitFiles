@@ -41,18 +41,18 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 
 			self._logger.info("`git {arg1}`".format(**data))
 			uploads = self._settings.global_get_basefolder("uploads")
-			head, tail = os.path.split(uploads)
-			gitfilesFolder = head + "/gitfiles"
+			gitfilesFolder = os.path.expanduser("~") + "/gitfiles"
 			self._logger.info(gitfilesFolder)
 			if not self._settings.get(["initialized"]):
 				self._logger.info("Not initialized")
-				# These run if it's not been initialized before this
+				# These run if it's not been initialized before this 
 				try:
 					self._logger.info("Creating the gitfiles folder...")
 					os.mkdir(gitfilesFolder, 0755)
 					self._logger.info("Created gitfiles folder")
 				except OSError as e:
 					self._logger.info("gitfiles folder creation failed")
+					return
 				try:
 					self._logger.info("Initializing the uploads folder...")
 					output =  call(["git", "init"], cwd=gitfilesFolder)
@@ -61,18 +61,21 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 					self._settings.save()
 				except OSError as e:
 					self._logger.info("git init failed")
+					return
 				try:
 					self._logger.info("Setting up the remote origin for master...")
 					output =  call(["git", "remote", "add", "origin", self._settings.get(["url"])], cwd=gitfilesFolder)
 					self._logger.info(output)
 				except OSError as e:
 					self._logger.info("git add remote origin failed")
+					return
 				try:
 					self._logger.info("Creating the symlink...")
 					os.symlink(gitfilesFolder, uploads + "/github")
 					self._logger.info("Created symlink")
 				except OSError as e:
 					self._logger.info("Creation of symlink failed")
+					return
 			# This one runs regardless of whether or not it's been previously initialized
 			try:
 				self._logger.info("-- git pull origin master ---------------------------------------------------")
