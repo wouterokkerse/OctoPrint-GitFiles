@@ -41,7 +41,7 @@ If everything worked, you should see something like this in the `octoprint.log` 
 
 ```
 2018-09-20 11:55:06,253 - octoprint.plugins.gitfiles - INFO - `git pull`
-2018-09-20 11:55:06,258 - octoprint.plugins.gitfiles - INFO - /home/pi/gitfiles
+2018-09-20 11:55:06,258 - octoprint.plugins.gitfiles - INFO - /home/pi/.octoprint/uploads/github
 2018-09-20 11:55:06,262 - octoprint.plugins.gitfiles - INFO - Not initialized
 2018-09-20 11:55:06,263 - octoprint.plugins.gitfiles - INFO - Creating the gitfiles folder...
 2018-09-20 11:55:06,311 - octoprint.plugins.gitfiles - INFO - 0
@@ -56,25 +56,9 @@ If everything worked, you should see something like this in the `octoprint.log` 
 2018-09-20 11:55:11,106 - octoprint.plugins.gitfiles - INFO - -- (end of git pull) --------------------------------------------------------
 ```
 
-## Upgrade to v1.1.1
-In this latest version, I note that the earlier attempts would result in some chatter in the `octoprint.log` file which suggests that OctoPrint checks the file structure of the `~/.octoprint` folder upon startup. It doesn't really like that this new `gitfiles` folder is under its umbrella.
-
-So I've moved this to the `~/gitfiles` location for better separation and to make OctoPrint happier. The functionality should remain the same.
-
-To upgrade to v1.1.1, you'll need to manually:
-
-1) remove the entire `~/.octoprint/gitfiles` folder with `rm -Rf ~/.octoprint/gitfiles`
-2) remove the symlink with `rm ~/.octoprint/uploads/github`
-3) edit the config.yaml with `nano ~/.octoprint/config.yaml`
-
-Find and remove the line under the `gitfiles` section which includes `Initialization`. Save and exit from nano.
-
-4) Upgrade to OctoPrint-GitFiles v1.1.1
-5) After the restart, press the GitHub icon under the Files side panel section and it should place things where they now belong.
-
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
-|OctoPrint-GitFiles|v1.1.1|OutsourcedGuru|September 29, 2018|
+|OctoPrint-GitFiles|v1.1.2|OutsourcedGuru|October 1, 2018|
 
 |Donate||Cryptocurrency|
 |:-----:|---|:--------:|
