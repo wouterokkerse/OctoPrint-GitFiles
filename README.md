@@ -56,6 +56,17 @@ If everything worked, you should see something like this in the `octoprint.log` 
 2018-09-20 11:55:11,106 - octoprint.plugins.gitfiles - INFO - -- (end of git pull) --------------------------------------------------------
 ```
 
+## Setup for Private Github Repository
+Although I've not tested it directly with this plugin, there's a way of sending in your github credentials as part of the URL in the plugin's Settings page.
+
+```
+https://YourGitHubID:YourPassword@github.com/YourGitHubID/3d-files.git
+```
+
+You just prepend the hostname `github.com` with `YourGitHubID:YourPassword@` ensuring that your password doesn't *itself* contain either of the special symbols shown.
+
+If you don't like the idea of your credentials being copied to OctoPrint's `config.yaml` like this then set it up normally in the Settings page. Next, it should be possible to then manually edit the `~/.octoprint/uploads/github/.git/config` file under the `[remote origin]` section, adding the credentials as described above. In this way, your credentials will appear in the config file under a hidden `.git` directory rather than within OctoPrint's own file.
+
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
 |OctoPrint-GitFiles|v1.1.2|OutsourcedGuru|October 1, 2018|
