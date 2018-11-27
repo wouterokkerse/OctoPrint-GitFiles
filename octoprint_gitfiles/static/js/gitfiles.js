@@ -16,15 +16,14 @@ $(function() {
                 contentType: "application/json",
                 dataType:    "json",
                 headers:     {"X-Api-Key": UI_API_KEY},
-                data:        JSON.stringify({"command": "git", "arg1": "pull"})
-            });
-            // Now set a 5-second timer to click the refresh icon
-            setTimeout(function() {
-                var a = $("#files_wrapper").find("div").find(".refresh-trigger").find("a");
-                if (a.length) {
-                    a.click();
+                data:        JSON.stringify({"command": "git", "arg1": "pull"}),
+                complete: function () {
+                    var a = $("#files_wrapper").find("div").find(".refresh-trigger").find("a");
+                    if (a.length) {
+                        a.click();
+                    }
                 }
-            }, 5000);
+            });
         };
 
         self.onStartupComplete = function() {

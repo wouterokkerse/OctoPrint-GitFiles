@@ -12,10 +12,10 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
                      octoprint.plugin.TemplatePlugin):
 
 	def get_settings_defaults(self):
-		return dict(url="https://github.com/YourGithubUsername/YourRepository.git",initialized=False)
+		return dict(url="https://github.com/YourGithubUsername/YourRepository.git",path="gitfiles",initialized=False)
 
 	def get_template_vars(self):
-		return dict(url=self._settings.get(["url"]))
+		return dict(url=self._settings.get(["url"]), path=self._settings.get(["path"]))
 
 	def get_template_configs(self):
 		return [dict(type="settings", custom_bindings=False)]
@@ -41,18 +41,23 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 
 			self._logger.info("`git {arg1}`".format(**data))
 			uploads = self._settings.global_get_basefolder("uploads")
-			gitfilesFolder = uploads + "/github"
+			
+			if self._settings.get(["path"]) == "":
+				gitfilesFolder = uploads
+			else:
+				gitfilesFolder = uploads + "/" + self._settings.get(["path"])
 			self._logger.info(gitfilesFolder)
 			if not self._settings.get(["initialized"]):
 				self._logger.info("Not initialized")
 				# These run if it's not been initialized before this
-				try:
-					self._logger.info("Creating the gitfiles folder...")
-					os.mkdir(gitfilesFolder, 0755)
-					self._logger.info("Created gitfiles folder")
-				except OSError as e:
-					self._logger.info("gitfiles folder creation failed")
-					return
+				if not os.path.isdir(gitfilesFolder):
+					try:
+						self._logger.info("Creating the gitfiles folder...")
+						os.mkdir(gitfilesFolder, 0755)
+						self._logger.info("Created gitfiles folder")
+					except OSError as e:
+						self._logger.info("gitfiles folder creation failed")
+						return
 				try:
 					self._logger.info("Initializing the uploads folder...")
 					output =  call(["git", "init"], cwd=gitfilesFolder)

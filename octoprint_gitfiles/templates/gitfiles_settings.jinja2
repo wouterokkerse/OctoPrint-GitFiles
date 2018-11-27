@@ -1,13 +1,20 @@
 <div>
     <h3>{{ _('GitFiles settings') }}</h3>
     <div style="clear:both">
-        See the github <a href="https://github.com/OutsourcedGuru/OctoPrint-GitFiles" target="_blank">README.md</a> for how to setup your repository.
+        See the github <a href="https://github.com/OutsourcedGuru/OctoPrint-GitFiles" target="_blank">README.md</a> for how to setup your repository.<br/>
+        By default, path is a github folder under uploads.  You can use the uploads folder by using that option under Path.
     </div>
     <form class="form-horizontal">
         <div class="control-group">
             <label class="control-label">{{ _('URL:') }}</label>
             <div class="controls">
                 <input type="text" class="input-block-level" data-bind="value: settings.plugins.gitfiles.url">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label">{{ _('Path:') }}</label>
+            <div class="controls">
+                <input type="text" class="input-block-level" data-bind="value: settings.plugins.gitfiles.path">
             </div>
         </div>
     </form>
