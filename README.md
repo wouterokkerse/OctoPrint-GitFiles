@@ -65,7 +65,57 @@ https://YourGitHubID:YourPassword@github.com/YourGitHubID/3d-files.git
 
 You just prepend the hostname `github.com` with `YourGitHubID:YourPassword@` ensuring that your password doesn't *itself* contain either of the special symbols shown.
 
+You can also use privately hosted GitLab instances just by replacing github.com with the host of your privately hosted instance.
+
 If you don't like the idea of your credentials being copied to OctoPrint's `config.yaml` like this then set it up normally in the Settings page. Next, it should be possible to then manually edit the `~/.octoprint/uploads/github/.git/config` file under the `[remote origin]` section, adding the credentials as described above. In this way, your credentials will appear in the config file under a hidden `.git` directory rather than within OctoPrint's own file.
+
+## Setup using an SSH key for authentication
+
+If you don't want to pass your credentials in your URL or save them in your git config, you can use an SSH Key for authentication.
+
+This requires you to generate an SSH key on your pi.  You'll want to SSH in first and then issue the following command:
+```
+pi@octopi:~ $ ssh-keygen -t rsa -C "pi@octopi"
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/pi/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/pi/.ssh/id_rsa.
+Your public key has been saved in /home/pi/.ssh/id_rsa.pub.
+```
+
+Use all the default settings to put the key in ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub.  You need to open *id_rsa.pub* in a text editor and copy its contents.  *MAKE SURE IT IS .PUB*
+
+In your GitLab/Github account, go into your profile settings and open SSH keys.  Click *New SSH Key* and paste in the contents of this file.  This will allow you to authenticate using an SSH key and not storing your credentials.
+
+![keys section](https://imgur.com/8E5hA83)
+
+![new ssh key button](https://imgur.com/5gKul5A)
+
+You'll need to test this first on the pi to accept the key.  First, you'll need the proper url for using SSH authentication.  Instead of using https, you start the URL with git@host:
+
+Example:
+```
+git@github.com:YourGitHubUserID/repo.git
+```
+
+So on the pi, you'll want to do something like this to just test and accept the SSH key:
+
+```
+pi@raziel:~ $ mkdir tmp
+pi@raziel:~ $ cd tmp
+pi@raziel:~ $ git clone git@github.com:YourGitHubUserID/repo.git
+Cloning into 'repo'...
+The authenticity of host 'XXXX (X.X.X.X)' can't be established.
+ECDSA key fingerprint is SHA256:1Pe176kN32iqaypIpAfQIwmEiUDFhwX3q/gI9J2+lPw.
+Are you sure you want to continue connecting (yes/no)? yes
+```
+
+You must type yes to accept the key and store it, so the plugin will be able to pull from the repo in the future.
+
+After this is completed, you can simply configure the correct git@ URL in the plugin settings and you're ready to use SSH authentication.
+
+---------------------------------------------
 
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
