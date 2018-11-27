@@ -71,11 +71,13 @@ If you don't like the idea of your credentials being copied to OctoPrint's `conf
 
 ## Setup using an SSH key for authentication
 
-If you don't want to pass your credentials in your URL or save them in your git config, you can use an SSH Key for authentication.
+If you don't want to pass your credentials in your URL or to save them in your git config, you can use an SSH key for authenticating to your remote repository.
 
-This requires you to generate an SSH key on your pi.  You'll want to SSH in first and then issue the following command:
+This requires that you generate an SSH keypair on your Raspberry Pi.  You'll want to remote into your Raspberry first with `ssh` and then issue the following command after the $ sign, accepting the defaults by pressing Enter each time:
+
 ```
 pi@octopi:~ $ ssh-keygen -t rsa -C "pi@octopi"
+
 Generating public/private rsa key pair.
 Enter file in which to save the key (/home/pi/.ssh/id_rsa): 
 Enter passphrase (empty for no passphrase): 
@@ -84,42 +86,52 @@ Your identification has been saved in /home/pi/.ssh/id_rsa.
 Your public key has been saved in /home/pi/.ssh/id_rsa.pub.
 ```
 
-Use all the default settings to put the key in ~/.ssh/id_rsa and ~/.ssh/id_rsa.pub.  You need to open *id_rsa.pub* in a text editor and copy its contents.  *MAKE SURE IT IS .PUB*
+Using the default settings should create the keys as `~/.ssh/id_rsa` (private key) and `~/.ssh/id_rsa.pub` (public key).  You need to open *id_rsa.pub* in a text editor and copy its contents.  *MAKE SURE YOU OPEN/COPY THE .PUB VERSION.*
 
-In your GitLab/Github account, go into your profile settings and open SSH keys.  Click *New SSH Key* and paste in the contents of this file.  This will allow you to authenticate using an SSH key and not storing your credentials.
+In your Github/GitLab account, go into your profile settings and open the section for SSH keys.  Click *New SSH Key* and paste in the contents of the public key you copied in the previous step.  This will allow you to authenticate using an SSH key yet not store your credentials anywhere.
 
-![keys section](https://imgur.com/8E5hA83)
+![keys section](https://i.imgur.com/8E5hA83.png)
 
-![new ssh key button](https://imgur.com/5gKul5A)
+![new ssh key button](https://i.imgur.com/5gKul5A.png)
 
-You'll need to test this first on the pi to accept the key.  First, you'll need the proper url for using SSH authentication.  Instead of using https, you start the URL with git@host:
+Once saved, you'll need to test this first on the Raspberry to accept the key.  Adjust the URL for SSH authentication, changing the protocol.  Instead of beginning with `https://host/`, you start the URL with `git@host:github.com:` and finishing with your case-sensitive ID and repository.
 
 Example:
 ```
 git@github.com:YourGitHubUserID/repo.git
 ```
 
-So on the pi, you'll want to do something like this to just test and accept the SSH key:
+So on the Raspberry, you'll want to do something like this to just test and accept the SSH key, (entering the commands after each $ sign):
 
 ```
-pi@raziel:~ $ mkdir tmp
-pi@raziel:~ $ cd tmp
-pi@raziel:~ $ git clone git@github.com:YourGitHubUserID/repo.git
+pi@octopi:~ $ mkdir ~/tmp && cd ~/tmp
+pi@octopi:~ $ git clone git@github.com:YourGitHubUserID/repo.git
 Cloning into 'repo'...
 The authenticity of host 'XXXX (X.X.X.X)' can't be established.
 ECDSA key fingerprint is SHA256:1Pe176kN32iqaypIpAfQIwmEiUDFhwX3q/gI9J2+lPw.
 Are you sure you want to continue connecting (yes/no)? yes
 ```
 
-You must type yes to accept the key and store it, so the plugin will be able to pull from the repo in the future.
+You must type yes to accept the key and to store it, so that later the plugin will be able to pull from your repository in the future.
 
 After this is completed, you can simply configure the correct git@ URL in the plugin settings and you're ready to use SSH authentication.
+
+Now that you've initially tested your keypair and you no longer need that temporary folder, you can remove it with (entering the commands after the $ sign):
+
+```
+pi@octopi:~ $ cd ~ && rm -rF tmp
+```
 
 ---------------------------------------------
 
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
-|OctoPrint-GitFiles|v1.1.2|OutsourcedGuru|October 1, 2018|
+|OctoPrint-GitFiles|v1.1.3|OutsourcedGuru|November 26, 2018|
+
+|Who|Role|
+|:---|:---|
+|OutsourcedGuru|Author|
+|scottrini|Contributor - Docs & recent work with direct uploads functionality |
 
 |Donate||Cryptocurrency|
 |:-----:|---|:--------:|
