@@ -12,7 +12,7 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
                      octoprint.plugin.TemplatePlugin):
 
 	def get_settings_defaults(self):
-		return dict(url="https://github.com/YourGithubUsername/YourRepository.git",path="gitfiles",initialized=False)
+		return dict(url="https://github.com/YourUserID/YourRepository.git", path="gitfiles")
 
 	def get_template_vars(self):
 		return dict(url=self._settings.get(["url"]), path=self._settings.get(["path"]))
@@ -35,54 +35,66 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 	def on_api_command(self, command, data):
 		import flask
 		if command == "git":
-			if self._settings.get(["url"]) == "https://github.com/YourGithubUsername/YourRepository.git":
+			if self._settings.get(["url"]) == "https://github.com/YourUserID/YourRepository.git":
 				self._logger.info("Problem with setup. Please visit Settings -> GitFiles and adjust the URL")
 				return
 
-			self._logger.info("`git {arg1}`".format(**data))
 			uploads = self._settings.global_get_basefolder("uploads")
+			path =    self._settings.get(["path"])
+			url =     self._settings.get(["url"])
+			verb =    "{arg1}".format(**data)
 			
-			if self._settings.get(["path"]) == "":
+			if path == "" or path == "uploads":
 				gitfilesFolder = uploads
 			else:
-				gitfilesFolder = uploads + "/" + self._settings.get(["path"])
-			self._logger.info(gitfilesFolder)
-			if not self._settings.get(["initialized"]):
-				self._logger.info("Not initialized")
-				# These run if it's not been initialized before this
-				if not os.path.isdir(gitfilesFolder):
-					try:
-						self._logger.info("Creating the gitfiles folder...")
-						os.mkdir(gitfilesFolder, 0755)
-						self._logger.info("Created gitfiles folder")
-					except OSError as e:
-						self._logger.info("gitfiles folder creation failed")
-						return
-				try:
-					self._logger.info("Initializing the uploads folder...")
-					output =  call(["git", "init"], cwd=gitfilesFolder)
-					self._logger.info(output)
-					s = settings()
-					s.setBoolean(["plugins", "gitfiles", "initialized"], True)
-					s.save()
-				except OSError as e:
-					self._logger.info("git init failed")
-					return
-				try:
-					self._logger.info("Setting up the remote origin for master...")
-					output =  call(["git", "remote", "add", "origin", self._settings.get(["url"])], cwd=gitfilesFolder)
-					self._logger.info(output)
-				except OSError as e:
-					self._logger.info("git add remote origin failed")
-					return
+				gitfilesFolder = uploads + "/" + path
+			self._logger.info("Path: `{}`".format(gitfilesFolder))
+			# In the indicated path, issue a `git remote get-url origin` to determine whether
+			# or not it's been initialized before
+			try:
+				self._logger.info("Testing the indicated `{}` folder...".format(gitfilesFolder))
+				output =  call(["git", "remote", "get-url", "origin"], cwd=gitfilesFolder)
+				if output > 0:
+					self.init(output, gitfilesFolder, url)
+			except OSError as e:
+				self._logger.info("Indicated folder is not initialized yet, throwing error")
+				output = "N/A"
+				self.init(output, gitfilesFolder, url)
+
 			# This one runs regardless of whether or not it's been previously initialized
 			try:
-				self._logger.info("-- git pull origin master ---------------------------------------------------")
-				output =  call(["git", "pull", "origin", "master"], cwd=gitfilesFolder)
+				self._logger.info("-- git {} origin master ---------------------------------------------------".format(verb))
+				output =  call(["git", verb, "origin", "master"], cwd=gitfilesFolder)
 				self._logger.info("git returned: " + str(output))
-				self._logger.info("-- (end of git pull) --------------------------------------------------------")
+				self._logger.info("-- (end of git {}) --------------------------------------------------------".format(verb))
 			except OSError as e:
-				self._logger.info("git pull failed")
+				self._logger.info("`git {}` failed".format(verb))
+
+	def init(self, output, gitfilesFolder, url):
+		self._logger.info("Path is not initialized already, returned error: `{}`".format(output))
+		# TODO: Test to see if the output is the correct remote
+		if not os.path.isdir(gitfilesFolder):
+			try:
+				self._logger.info("Creating the new `{}` subfolder...".format(gitfilesFolder))
+				os.mkdir(gitfilesFolder, 0755)
+				self._logger.info("Created")
+			except OSError as e:
+				self._logger.info("Subfolder creation failed")
+				return
+		try:
+			self._logger.info("Initializing...")
+			output =  call(["git", "init"], cwd=gitfilesFolder)
+			self._logger.info(output)
+		except OSError as e:
+			self._logger.info("`git init` failed")
+			return
+		try:
+			self._logger.info("Setting up the remote origin for master...")
+			output =  call(["git", "remote", "add", "origin", url], cwd=gitfilesFolder)
+			self._logger.info(output)
+		except OSError as e:
+			self._logger.info("`git add remote origin` failed")
+			return
 
 	def get_update_information(self):
 		return dict(

@@ -17,17 +17,17 @@ tags:
 - file manager
 
 screenshots:
-- url: https://user-images.githubusercontent.com/15971213/45835939-45777700-bcc0-11e8-80c6-2bc31e08f3ec.png
+- url: https://user-images.githubusercontent.com/15971213/49118353-c28f1180-f258-11e8-8c3a-612dad2ad2e1.png
   alt: Settings screen
   caption: Settings
 - url: https://user-images.githubusercontent.com/15971213/45719691-396fa600-bb56-11e8-9e71-d0d51c58ce4a.png
   alt: Github - new repository
   caption: Create a repository in Github for your gcode files
-- url: https://user-images.githubusercontent.com/15971213/45836320-5c6a9900-bcc1-11e8-92eb-3b0b20292e54.png
+- url: https://user-images.githubusercontent.com/15971213/49118125-18af8500-f258-11e8-8e80-5eed2abf3dfa.png
   alt: Button in Files side panel
   caption: Click the button in the Files side panel
 
-featuredimage: https://user-images.githubusercontent.com/15971213/45835939-45777700-bcc0-11e8-80c6-2bc31e08f3ec.png
+featuredimage: https://user-images.githubusercontent.com/15971213/49118353-c28f1180-f258-11e8-8c3a-612dad2ad2e1.png
 
 compatibility:
   octoprint:

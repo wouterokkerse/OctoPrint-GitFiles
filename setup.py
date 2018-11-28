@@ -14,11 +14,11 @@ plugin_package = "octoprint_gitfiles"
 plugin_name = "GitFiles"
 
 # The plugin's version. Can be overwritten within OctoPrint's internal data via __plugin_version__ in the plugin module
-plugin_version = "1.1.3"
+plugin_version = "1.1.4"
 
 # The plugin's description. Can be overwritten within OctoPrint's internal data via __plugin_description__ in the plugin
 # module
-plugin_description = """Use a github repository for keeping your OctoPrint Files collection up-to-date."""
+plugin_description = """Use a github/GitLab repository for keeping your OctoPrint Files collection up-to-date."""
 
 # The plugin's author. Can be overwritten within OctoPrint's internal data via __plugin_author__ in the plugin module
 plugin_author = "OutsourcedGuru"

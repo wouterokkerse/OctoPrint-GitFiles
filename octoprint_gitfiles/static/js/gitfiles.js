@@ -30,7 +30,7 @@ $(function() {
             var element = $("div.gcode_files")
                         .find("div.scroll-wrapper > div.entry")
                         .find("div.internal > span")
-                        .filter(function(){ return $(this).text() == 'github'; })
+                        .filter(function(){ return $(this).text() == 'gitfiles'; }) /* TODO: Make this able to note a changed subfolder */
                         .parent()
                         .siblings("div.btn-group.action-buttons")
                         .find("div.btn.btn-mini");
