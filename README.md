@@ -36,7 +36,7 @@ If you don't adjust the Settings -> GitFiles -> URL from the default, you should
 2018-09-20 11:52:39,136 - octoprint.plugins.gitfiles - INFO - Problem with setup. Please visit Settings -> GitFiles and adjust the URL
 ```
 
-## Successfully initialization
+## Successful initialization
 If everything worked, you should see something like this in the `octoprint.log` file:
 
 ```
