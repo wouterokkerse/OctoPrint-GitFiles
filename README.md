@@ -133,7 +133,7 @@ pi@octopi:~ $ cd ~ && rm -rF tmp
 
 |Description|Version|Author|Last Update|
 |:---|:---|:---|:---|
-|OctoPrint-GitFiles|v1.1.4|OutsourcedGuru|November 27, 2018|
+|OctoPrint-GitFiles|v1.1.5|OutsourcedGuru|November 27, 2018|
 
 |Who|Role|
 |:---|:---|
