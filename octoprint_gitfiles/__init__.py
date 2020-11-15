@@ -68,7 +68,7 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 			# This one runs regardless of whether or not it's been previously initialized
 			try:
 				self._logger.info("-- git {} origin {mybranch} ---------------------------------------------------".format(verb))
-				output =  call(["git", verb, "origin", "{mybranch} ], cwd=gitfilesFolder)
+				output =  call(["git", verb, "origin", "{mybranch}" ], cwd=gitfilesFolder)
 				self._logger.info("git returned: " + str(output))
 				self._logger.info("-- (end of git {}) --------------------------------------------------------".format(verb))
 			except OSError as e:
