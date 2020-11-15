@@ -17,6 +17,9 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 	def get_template_vars(self):
 		return dict(url=self._settings.get(["url"]), path=self._settings.get(["path"]))
 
+	def get_template_vars(self):
+		return dict(url=self._settings.get(["mybranch"]), path=self._settings.get(["mybranch"]))
+
 	def get_template_configs(self):
 		return [dict(type="settings", custom_bindings=False)]
 
