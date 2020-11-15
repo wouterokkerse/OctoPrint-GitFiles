@@ -67,8 +67,8 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 
 			# This one runs regardless of whether or not it's been previously initialized
 			try:
-				self._logger.info("-- git {} origin " + mybranch + " ---------------------------------------------------".format(verb))
-				output =  call(["git", verb, "origin", mybranch], cwd=gitfilesFolder)
+				self._logger.info("-- git {} origin {mybranch} ---------------------------------------------------".format(verb))
+				output =  call(["git", verb, "origin", "{mybranch} ], cwd=gitfilesFolder)
 				self._logger.info("git returned: " + str(output))
 				self._logger.info("-- (end of git {}) --------------------------------------------------------".format(verb))
 			except OSError as e:
@@ -93,7 +93,7 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
 			self._logger.info("`git init` failed")
 			return
 		try:
-			self._logger.info("Setting up the remote origin for " + mybranch + "...")
+			self._logger.info("Setting up the remote origin for {mybranch} ...")
 			output =  call(["git", "remote", "add", "origin", url], cwd=gitfilesFolder)
 			self._logger.info(output)
 		except OSError as e:
