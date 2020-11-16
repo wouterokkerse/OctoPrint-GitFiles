@@ -12,14 +12,14 @@ class GitfilesPlugin(octoprint.plugin.SettingsPlugin,
                      octoprint.plugin.TemplatePlugin):
 
 	def get_settings_defaults(self):
-		return dict(url="https://github.com/YourUserID/YourRepository.git", path="gitfiles")
+		return dict(url="https://github.com/YourUserID/YourRepository.git", path="gitfiles", mybranch="branchname")
 
 	def get_template_vars(self):
-		return dict(url=self._settings.get(["url"]), path=self._settings.get(["path"]))
-
+		return dict(url=self._settings.get(["url"]), path=self._settings.get(["path"]), path=self._settings.get(["mybranch"]))
+/*
 	def get_template_vars(self):
 		return dict(url=self._settings.get(["mybranch"]), path=self._settings.get(["mybranch"]))
-
+*/
 	def get_template_configs(self):
 		return [dict(type="settings", custom_bindings=False)]
 
